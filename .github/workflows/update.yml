@@ -1,0 +1,64 @@
+name: Update
+
+# Renders the formula of a published Procly release again and pushes it. The release workflow of Procly does this
+# on every tag, so this is the way back when its `homebrew` job failed or the formula must be rewritten by hand.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version of the published release, without the leading v, such as 0.1.0
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  # Starting the Tests workflow, which a push made with the repository token does not start by itself.
+  actions: write
+
+concurrency:
+  group: update-formula
+  cancel-in-progress: false
+
+jobs:
+  formula:
+    name: Render the formula of ${{ inputs.version }}
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ inputs.version }}
+      PROCLY_REPOSITORY: philippe-desplats/procly
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check the version
+        run: |
+          if ! [[ "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::'${VERSION}' is not a release version, prereleases never reach the tap"
+            exit 1
+          fi
+      # The checksums and the script come from the release itself, so the formula is the one the release
+      # workflow would have pushed.
+      - name: Fetch the checksums and the renderer of the release
+        run: |
+          mkdir -p dist
+          gh release download "v${VERSION}" --repo "${PROCLY_REPOSITORY}" --pattern SHA256SUMS --dir dist
+          gh api "repos/${PROCLY_REPOSITORY}/contents/scripts/render-formula.sh?ref=v${VERSION}" \
+            -H "Accept: application/vnd.github.raw" > dist/render-formula.sh
+      - name: Render the formula
+        run: |
+          mkdir -p Formula
+          bash dist/render-formula.sh "${VERSION}" dist/SHA256SUMS > Formula/procly.rb
+          ruby -c Formula/procly.rb
+          cat Formula/procly.rb
+      - name: Push the formula
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/procly.rb
+          if git diff --cached --quiet; then
+            echo "the formula already is at ${VERSION}"
+            exit 0
+          fi
+          git commit -m "procly ${VERSION}"
+          git push origin HEAD
+      - name: Test the pushed formula
+        run: gh workflow run tests.yml --repo "${GITHUB_REPOSITORY}" --ref "${GITHUB_REF_NAME}"

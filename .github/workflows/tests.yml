@@ -1,0 +1,48 @@
+name: Tests
+
+# Audits the formula and installs it, on every change to it. The formula is pushed by the release workflow of
+# Procly, so this is the check that what it pushed installs and runs.
+on:
+  push:
+    branches: [main]
+    paths: ["Formula/**", ".github/workflows/tests.yml"]
+  pull_request:
+    paths: ["Formula/**", ".github/workflows/tests.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  formula:
+    name: Formula on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      FORMULA: philippe-desplats/procly/procly
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+    steps:
+      # Taps this repository from the checkout, so the formula under test is the one of this commit.
+      - uses: Homebrew/actions/setup-homebrew@main
+      # Until the first release of Procly the tap holds no formula, and there is nothing to test.
+      - id: formula
+        run: |
+          if [ -f "$(brew --repository philippe-desplats/procly)/Formula/procly.rb" ]; then
+            echo "present=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "no Formula/procly.rb yet, nothing to test"
+            echo "present=false" >> "${GITHUB_OUTPUT}"
+          fi
+      - if: steps.formula.outputs.present == 'true'
+        run: brew style "${FORMULA}"
+      # `--online` downloads nothing but checks that every URL answers, which catches a release asset that is
+      # missing or not public.
+      - if: steps.formula.outputs.present == 'true'
+        run: brew audit --strict --online --formula "${FORMULA}"
+      - if: steps.formula.outputs.present == 'true'
+        run: brew install --formula "${FORMULA}"
+      - if: steps.formula.outputs.present == 'true'
+        run: brew test "${FORMULA}"
