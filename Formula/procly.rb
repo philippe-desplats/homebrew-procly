@@ -1,7 +1,6 @@
 class Procly < Formula
   desc "Supervisor so coding agents never duplicate processes, containers or ports"
   homepage "https://github.com/philippe-desplats/procly"
-  version "0.1.0"
   license any_of: ["MIT", "Apache-2.0"]
 
   on_macos do
