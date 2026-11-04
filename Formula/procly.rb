@@ -5,23 +5,23 @@ class Procly < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/philippe-desplats/procly/releases/download/v0.3.0/procly-0.3.0-aarch64-apple-darwin.tar.gz"
-      sha256 "fb928a6c6452a84232dd6012a4d8285576a83b2320f95a06f5c60974daccbd8b"
+      url "https://github.com/philippe-desplats/procly/releases/download/v0.4.0/procly-0.4.0-aarch64-apple-darwin.tar.gz"
+      sha256 "22ffd2a11c17978719f284b1cc0b0dd94788262dc425c10a809f73ad03717ae1"
     end
     on_intel do
-      url "https://github.com/philippe-desplats/procly/releases/download/v0.3.0/procly-0.3.0-x86_64-apple-darwin.tar.gz"
-      sha256 "2b964f20a04fa64ce91d664afb057bf22d063cd6ce6b511276e2f5f46cc97f93"
+      url "https://github.com/philippe-desplats/procly/releases/download/v0.4.0/procly-0.4.0-x86_64-apple-darwin.tar.gz"
+      sha256 "e65e0be3f47149c95bf3814e06f4800010b6d4324611f6e2ce31321292538fc4"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/philippe-desplats/procly/releases/download/v0.3.0/procly-0.3.0-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "83fd72055058b549eede18a660aeaa590b81e82364448ae3ab620044a0473fe9"
+      url "https://github.com/philippe-desplats/procly/releases/download/v0.4.0/procly-0.4.0-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "4da6efae893f02f0a172e8db2acaa1fb06c08d057bb6a111e86b17fb9cd69f01"
     end
     on_intel do
-      url "https://github.com/philippe-desplats/procly/releases/download/v0.3.0/procly-0.3.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "c847c5de402d43dee48e8a693a0fd13fda39e007dd7e551685ef5a207c293384"
+      url "https://github.com/philippe-desplats/procly/releases/download/v0.4.0/procly-0.4.0-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "a0e50f5f13a0bf4ba51b5a3dd1acc92eb7787dbd5f5dcf116f66d165b1181c23"
     end
   end
 
