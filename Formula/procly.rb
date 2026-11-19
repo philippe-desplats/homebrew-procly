@@ -6,22 +6,22 @@ class Procly < Formula
   on_macos do
     on_arm do
       url "https://github.com/philippe-desplats/procly/releases/download/v0.5.1/procly-0.5.1-aarch64-apple-darwin.tar.gz"
-      sha256 "2f6a632b34b8a1aca35fbb014c8c615c7d673077848c75ea6766f9310aa601f6"
+      sha256 "a34c644d21c5830555fd2c66228b4596fc180c4a869fe44a8ac251bb48b7ea22"
     end
     on_intel do
       url "https://github.com/philippe-desplats/procly/releases/download/v0.5.1/procly-0.5.1-x86_64-apple-darwin.tar.gz"
-      sha256 "b125061021f1c0a773753c15506c2be137b3c4fcbec6202d433789f1617d548d"
+      sha256 "3f6daa39c267a3981b56aa0e6853ffd8f25e4e71d77ece632edcde7f92d735c5"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/philippe-desplats/procly/releases/download/v0.5.1/procly-0.5.1-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "0c98014bcfd451bf60dc1787a892e16f2f7c87d8576695c968a4f60cef672466"
+      sha256 "98710f24ac42d123d87fc1addfe3205e0cf5a41079fd86227fe03b92064a6990"
     end
     on_intel do
       url "https://github.com/philippe-desplats/procly/releases/download/v0.5.1/procly-0.5.1-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "6b799b0fed189a18b732d02c17feb457e8d930234da9c979b3e232f2b19f883e"
+      sha256 "d4628ad4034eadad332572798871b597bbbe35e118d327870898b626fd9b79a8"
     end
   end
 

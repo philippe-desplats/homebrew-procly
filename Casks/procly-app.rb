@@ -1,12 +1,12 @@
 cask "procly-app" do
-  version "0.5.0"
+  version "0.5.1"
 
   on_arm do
-    sha256 "e4a331d28de832d1f0d98cfc89341cc12db6bbf0b50e102f4a4ac698a4cd65b2"
+    sha256 "e87739d4d1f4773b3c235d3aeecad6c3d84b25872f26baec28f6aa880d1c9c16"
     url "https://github.com/philippe-desplats/procly/releases/download/v#{version}/Procly-#{version}-aarch64-apple-darwin.dmg"
   end
   on_intel do
-    sha256 "041d4fb7b4abca529af1ba34db6798228a7d03608afaeb8f85ed90efaaa860c5"
+    sha256 "259e9184d1639b7b5039f879c7ad4d50a552c8578268ca921d7954c4c1ac3382"
     url "https://github.com/philippe-desplats/procly/releases/download/v#{version}/Procly-#{version}-x86_64-apple-darwin.dmg"
   end
 
